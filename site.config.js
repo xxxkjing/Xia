@@ -13,7 +13,7 @@ const CONFIG = {
   projects: [
      {
        name: `Xia`,
-       href: "https://github.com/xxxkjing/Xia",
+       href: "https://dgithub.xyz/xxxkjing/Xia",
      },
    ],
   // blog setting (required)
@@ -54,7 +54,7 @@ const CONFIG = {
     },
   },
   utterances: {
-    enable: true,
+    enable: false,
     config: {
       repo: process.env.NEXT_PUBLIC_UTTERANCES_REPO || "comment",
       "issue-term": "og:title",
