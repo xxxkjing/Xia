@@ -16,7 +16,7 @@ const CONFIG = {
        href: "https://github.com/xxxkjing/Xia",
      },
    ],
-  blog setting (required)
+  // blog setting (required)
   blog: {
     title: "MetaIllusion的博客",
     description: "Welcome!",
