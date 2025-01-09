@@ -10,13 +10,13 @@ const CONFIG = {
     github: "xxxkjing",
     instagram: "",
   },
-  // projects: [
-  //   {
-  //     name: ``,
-  //     href: "https://github.com/morethanmin/morethan-log",
-  //   },
-  // ],
-  // blog setting (required)
+  projects: [
+     {
+       name: `Xia`,
+       href: "https://github.com/xxxkjing/Xia",
+     },
+   ],
+  blog setting (required)
   blog: {
     title: "MetaIllusion的博客",
     description: "Welcome!",
