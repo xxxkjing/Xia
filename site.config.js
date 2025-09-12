@@ -4,27 +4,27 @@ const CONFIG = {
     name: "MetaIllusion",
     image: "/avatar.png", // If you want to create your own notion avatar, check out https://notion-avatar.vercel.app
     role: "不务正业的高中生",
-    bio: "野火烧不尽，春风吹又生",
-    email: "xkjing@outlook.com",
+    bio: "天下有三重",
+    email: "xkjing.xiajing@gmail.com",
     linkedin: "",
     github: "xxxkjing",
     instagram: "",
   },
   projects: [
      {
-       name: `Xia`,
-       href: "https://dgithub.xyz/xxxkjing/Xia",
+       name: `Blog`,
+       href: "https://github.com/xxxkjing/Xia",
      },
    ],
   // blog setting (required)
   blog: {
-    title: "MetaIllusion的博客",
-    description: "Welcome!",
-    scheme: "system", // 'light' | 'dark' | 'system'
+    title: "MetaIllusion 的博客",
+    description: "记录一个高中生日常的博客",
+    scheme: "dark", // 'light' | 'dark' | 'system'
   },
 
   // CONFIG configration (required)
-  link: "https://xiablog.netlify.app/",
+  link: "https://xia.shfu.cn",
   since: 2024, // If leave this empty, current year will be used.
   lang: "zh-CN", // ['en-US', 'zh-CN', 'zh-HK', 'zh-TW', 'ja-JP', 'es-ES', 'ko-KR']
   ogImageGenerateURL: "https://og-image-korean.vercel.app", // The link to generate OG image, don't end with a slash
