@@ -23,6 +23,10 @@ const CONFIG = {
        name: `Xia So`,
        href: "https://so.shfu.cn",
      },
+     {
+       name: `SoftLock`,
+       href: "https://github.com/xxxkjing/SoftLock",
+     },
    ],
   // blog setting (required)
   blog: {
