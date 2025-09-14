@@ -4,7 +4,7 @@ const CONFIG = {
     name: "MetaIllusion",
     image: "/avatar.png", // If you want to create your own notion avatar, check out https://notion-avatar.vercel.app
     role: "不务正业的高中生",
-    bio: "天下有三重",
+    bio: "曾经沧海难为水，除却巫山不是云",
     email: "xkjing.xiajing@gmail.com",
     linkedin: "",
     github: "xxxkjing",
