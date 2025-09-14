@@ -73,6 +73,30 @@ export const Global = () => {
           margin: 0;
           border-top: 1px solid ${theme.colors.gray6};
         }
+        /* 添加以下代码覆盖Notion渲染字体 */
+        .notion-app,
+        .notion-app *,
+        .notion-text,
+        .notion-list,
+        .notion-page,
+        .notion-column,
+        .notion-link,
+        .notion-toggle,
+        .notion-block,
+        .notion-heading,
+        .notion-code,
+        .notion-quote,
+        .notion-callout,
+        .notion-table,
+        .notion-row,
+        .notion-cell {
+          font-family: ${pretendard.style.fontFamily} !important;
+        }
+
+        /* 特别处理代码块 */
+        .notion-code {
+          font-family: "LXGW WenKai", "Cascadia Code", "Source Code Pro", Menlo, Consolas, "DejaVu Sans Mono", monospace !important;
+        }
       `}
     />
   )
