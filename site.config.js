@@ -15,6 +15,14 @@ const CONFIG = {
        name: `Blog`,
        href: "https://github.com/xxxkjing/Xia",
      },
+     {
+       name: `DownList`,
+       href: "https://github.com/xxxkjing/DownList",
+     },
+     {
+       name: `Xia So`,
+       href: "https://so.shfu.cn",
+     },
    ],
   // blog setting (required)
   blog: {
