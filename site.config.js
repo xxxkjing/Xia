@@ -13,7 +13,7 @@ const CONFIG = {
   projects: [
      {
        name: `DownList`,
-       href: "https://github.com/xxxkjing/DownList",
+       href: "https://dgithub.xyz/xxxkjing/DownList",
      },
      {
        name: `Xia So`,
@@ -21,7 +21,7 @@ const CONFIG = {
      },
      {
        name: `SoftLock`,
-       href: "https://github.com/xxxkjing/SoftLock",
+       href: "https://dgithub.xyz/xxxkjing/SoftLock",
      },
    ],
   // blog setting (required)
@@ -64,7 +64,7 @@ const CONFIG = {
   utterances: {
     enable: true,
     config: {
-      repo: process.env.NEXT_PUBLIC_UTTERANCES_REPO || "giscus-comment",
+      repo: "giscus-comment",
       "issue-term": "og:title",
       label: "💬评论",
     },
