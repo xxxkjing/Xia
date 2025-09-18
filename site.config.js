@@ -64,7 +64,7 @@ const CONFIG = {
   utterances: {
     enable: true,
     config: {
-      repo: "giscus-comment",
+      repo: "xxxkjing/giscus-comment",
       "issue-term": "og:title",
       label: "💬评论",
     },
