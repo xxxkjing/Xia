@@ -4,17 +4,13 @@ const CONFIG = {
     name: "MetaIllusion",
     image: "/avatar.png", // If you want to create your own notion avatar, check out https://notion-avatar.vercel.app
     role: "不务正业的高中生",
-    bio: "曾经沧海难为水，除却巫山不是云",
+    bio: "Time, Truth, and Hearts",
     email: "xkjing.xiajing@gmail.com",
     linkedin: "",
     github: "xxxkjing",
     instagram: "",
   },
   projects: [
-     {
-       name: `Blog`,
-       href: "https://github.com/xxxkjing/Xia",
-     },
      {
        name: `DownList`,
        href: "https://github.com/xxxkjing/DownList",
@@ -32,7 +28,7 @@ const CONFIG = {
   blog: {
     title: "MetaIllusion 的博客",
     description: "记录一个高中生日常的博客",
-    scheme: "dark", // 'light' | 'dark' | 'system'
+    scheme: "light", // 'light' | 'dark' | 'system'
   },
 
   // CONFIG configration (required)
@@ -66,9 +62,9 @@ const CONFIG = {
     },
   },
   utterances: {
-    enable: false,
+    enable: true,
     config: {
-      repo: process.env.NEXT_PUBLIC_UTTERANCES_REPO || "comment",
+      repo: process.env.NEXT_PUBLIC_UTTERANCES_REPO || "giscus-comment",
       "issue-term": "og:title",
       label: "💬评论",
     },
