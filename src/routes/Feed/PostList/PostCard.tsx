@@ -15,7 +15,7 @@ const PostCard: React.FC<Props> = ({ data }) => {
   const category = (data.category && data.category?.[0]) || undefined
 
   return (
-    <StyledWrapper href={`/${data.slug}`}>
+    <StyledWrapper href={`/${data.slug}`} className="transition-all hover-lift">
       <article>
         {category && (
           <div className="category">
@@ -28,7 +28,8 @@ const PostCard: React.FC<Props> = ({ data }) => {
               src={data.thumbnail}
               fill
               alt={data.title}
-              css={{ objectFit: "cover" }}
+              css={{ objectFit: "cover", transition: "transform 0.5s ease" }}
+              className="hover-scale"
             />
           </div>
         )}
@@ -38,7 +39,7 @@ const PostCard: React.FC<Props> = ({ data }) => {
           className="content"
         >
           <header className="top">
-            <h2>{data.title}</h2>
+            <h2 className="transition-all">{data.title}</h2>
           </header>
           <div className="date">
             <div className="content">
@@ -73,9 +74,8 @@ const StyledWrapper = styled(Link)`
     border-radius: 1rem;
     background-color: ${({ theme }) =>
       theme.scheme === "light" ? "white" : theme.colors.gray4};
-    transition-property: box-shadow;
-    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-    transition-duration: 300ms;
+    transition: all 0.3s ease;
+    transform: translateY(0);
 
     @media (min-width: 768px) {
       margin-bottom: 2rem;
@@ -84,7 +84,20 @@ const StyledWrapper = styled(Link)`
     :hover {
       box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
         0 4px 6px -2px rgba(0, 0, 0, 0.05);
+      transform: translateY(-5px);
+      
+      .thumbnail img.hover-scale {
+        transform: scale(1.05);
+      }
+      
+      h2 {
+        color: ${({ theme }) => theme.colors.blue10};
+      }
     }
+    
+    /* 添加进入动画 */
+    animation: fadeInUp 0.6s ease-out forwards;
+    
     > .category {
       position: absolute;
       top: 1rem;
@@ -97,6 +110,7 @@ const StyledWrapper = styled(Link)`
       width: 100%;
       background-color: ${({ theme }) => theme.colors.gray2};
       padding-bottom: 66%;
+      overflow: hidden;
 
       @media (min-width: 1024px) {
         padding-bottom: 50%;
@@ -125,8 +139,8 @@ const StyledWrapper = styled(Link)`
           font-size: 1.125rem;
           line-height: 1.75rem;
           font-weight: 500;
-
           cursor: pointer;
+          transition: color 0.3s ease;
 
           @media (min-width: 768px) {
             font-size: 1.25rem;
