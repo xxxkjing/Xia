@@ -26,12 +26,16 @@ const PostDetail: React.FC<Props> = () => {
       const newHeadings: Heading[] = []
       Object.values(data.recordMap.block).forEach((block) => {
         const { value } = block
-        if (value.type === 'header') {  // h1
-          newHeadings.push({ id: value.id, text: value.properties.title[0][0], level: 1 })
-        } else if (value.type === 'sub_header') {  // h2
-          newHeadings.push({ id: value.id, text: value.properties.title[0][0], level: 2 })
-        } else if (value.type === 'sub_sub_header') {  // h3
-          newHeadings.push({ id: value.id, text: value.properties.title[0][0], level: 3 })
+        const titleText = value?.properties?.title?.[0]?.[0]
+        
+        if (titleText) {
+          if (value.type === 'header') {  // h1
+            newHeadings.push({ id: value.id, text: titleText, level: 1 })
+          } else if (value.type === 'sub_header') {  // h2
+            newHeadings.push({ id: value.id, text: titleText, level: 2 })
+          } else if (value.type === 'sub_sub_header') {  // h3
+            newHeadings.push({ id: value.id, text: titleText, level: 3 })
+          }
         }
       })
       setHeadings(newHeadings)
