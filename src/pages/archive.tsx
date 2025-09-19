@@ -50,9 +50,7 @@ const ArchivePage: NextPageWithLayout<Props> = () => {
       <StyledWrapper className={isVisible ? "animate-fade-in" : ""}>
         <h1 className="animate-slide-in-right">归档</h1>
         <section className="animate-fade-in-up" style={{ animationDelay: "0.2s" }}>
-          <h2>统计</h2>
           <p>所有文章：{posts.length}</p>
-          <h3>标签</h3>
           <div className="button-list">
             {Object.entries(tags).map(([tag, count], index) => (
               <ButtonItem 
@@ -64,7 +62,6 @@ const ArchivePage: NextPageWithLayout<Props> = () => {
               </ButtonItem>
             ))}
           </div>
-          <h3>类别</h3>
           <div className="button-list">
             {Object.entries(categories).map(([category, count], index) => (
               <ButtonItem 
@@ -78,7 +75,6 @@ const ArchivePage: NextPageWithLayout<Props> = () => {
           </div>
         </section>
         <section className="animate-fade-in-up" style={{ animationDelay: "0.5s" }}>
-          <h2>时间线</h2>
           <TimelineWrapper>
             {Object.keys(postsByYear).sort((a, b) => Number(b) - Number(a)).map((year, yearIndex) => (
               <YearSection 
