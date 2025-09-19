@@ -1,4 +1,3 @@
-// src/layouts/RootLayout/ThemeProvider/Global/index.tsx
 import { Global as _Global, css, useTheme } from "@emotion/react"
 import { ThemeProvider as _ThemeProvider } from "@emotion/react"
 import { pretendard } from "src/assets"
