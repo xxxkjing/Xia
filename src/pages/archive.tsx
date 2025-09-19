@@ -1,4 +1,4 @@
-// src/pages/archive.tsx（完整代码，修复时间轴对齐问题）
+// src/pages/archive.tsx（完整代码，移除列表默认样式）
 import React from "react"
 import styled from "@emotion/styled"
 import { CONFIG } from "site.config"
@@ -115,7 +115,7 @@ const StyledWrapper = styled.div`
   h1, h2, h3 {
     color: ${({ theme }) => theme.colors.gray12};
   }
-  p, li {
+  p {
     color: ${({ theme }) => theme.colors.gray10};
   }
   a {
@@ -124,6 +124,15 @@ const StyledWrapper = styled.div`
     &:hover {
       text-decoration: underline;
     }
+  }
+  ul {
+    list-style: none;  // 移除所有ul的默认样式
+    padding: 0;
+    margin: 0;
+  }
+  li {
+    list-style: none;  // 移除所有li的默认样式
+    color: ${({ theme }) => theme.colors.gray10};
   }
   .button-list {  // 优化按钮列表，确保横向排列且居中对齐
     display: flex;
@@ -175,6 +184,7 @@ const TimelineLine = styled.div`
 const PostList = styled.ul`
   list-style: none;
   padding: 0;
+  margin: 0;
   margin-left: 0.5rem;  // 微调内容与线的距离
 `
 
@@ -182,6 +192,7 @@ const PostItem = styled.li`
   position: relative;
   margin-bottom: 1rem;  // 增加事件间距
   padding-left: 1rem;  // 内容向右偏移
+  list-style: none;
   &::before {  // 事件点
     content: '';
     position: absolute;
