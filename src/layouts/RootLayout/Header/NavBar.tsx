@@ -1,8 +1,12 @@
+// src/layouts/RootLayout/Header/NavBar.tsx
 import styled from "@emotion/styled"
 import Link from "next/link"
 
 const NavBar: React.FC = () => {
-  const links = [{ id: 1, name: "About", to: "/about" }]
+  const links = [
+    { id: 1, name: "About", to: "/about" },
+    { id: 2, name: "Archive", to: "/archive" }  // 新增 Archive 链接，样式与 About 一致
+  ]
   return (
     <StyledWrapper className="">
       <ul>

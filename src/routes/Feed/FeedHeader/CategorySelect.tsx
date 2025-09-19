@@ -1,8 +1,6 @@
-import useDropdown from "src/hooks/useDropdown"
+import { DEFAULT_CATEGORY } from "src/constants"
 import { useRouter } from "next/router"
 import React from "react"
-import { MdExpandMore } from "react-icons/md"
-import { DEFAULT_CATEGORY } from "src/constants"
 import styled from "@emotion/styled"
 import { useCategoriesQuery } from "src/hooks/useCategoriesQuery"
 
@@ -11,36 +9,40 @@ type Props = {}
 const CategorySelect: React.FC<Props> = () => {
   const router = useRouter()
   const data = useCategoriesQuery()
-  const [dropdownRef, opened, handleOpen] = useDropdown()
 
   const currentCategory = `${router.query.category || ``}` || DEFAULT_CATEGORY
 
-  const handleOptionClick = (category: string) => {
-    router.push({
-      query: {
-        ...router.query,
-        category,
-      },
-    })
+  const handleClickCategory = (category: string) => {
+    if (currentCategory === category) {
+      router.push({
+        query: {
+          ...router.query,
+          category: undefined,
+        },
+      })
+    } else {
+      router.push({
+        query: {
+          ...router.query,
+          category,
+        },
+      })
+    }
   }
+
   return (
     <StyledWrapper>
-      <div ref={dropdownRef} className="wrapper" onClick={handleOpen}>
-        {currentCategory} Posts <MdExpandMore />
+      <div className="list">
+        {Object.keys(data).map((key) => (
+          <a
+            key={key}
+            data-active={key === currentCategory}
+            onClick={() => handleClickCategory(key)}
+          >
+            {`${key} (${data[key]})`}
+          </a>
+        ))}
       </div>
-      {opened && (
-        <div className="content">
-          {Object.keys(data).map((key, idx) => (
-            <div
-              className="item"
-              key={idx}
-              onClick={() => handleOptionClick(key)}
-            >
-              {`${key} (${data[key]})`}
-            </div>
-          ))}
-        </div>
-      )}
     </StyledWrapper>
   )
 }
@@ -48,39 +50,40 @@ const CategorySelect: React.FC<Props> = () => {
 export default CategorySelect
 
 const StyledWrapper = styled.div`
-  position: relative;
-  > .wrapper {
+  .list {
     display: flex;
-    margin-top: 0.5rem;
     margin-bottom: 0.5rem;
-    gap: 0.25rem;
-    align-items: center;
-    font-size: 1.25rem;
-    line-height: 1.75rem;
-    font-weight: 700;
-    cursor: pointer;
-  }
-  > .content {
-    position: absolute;
-    z-index: 40;
-    padding: 0.25rem;
-    border-radius: 0.75rem;
-    background-color: ${({ theme }) => theme.colors.gray2};
-    color: ${({ theme }) => theme.colors.gray10};
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
-      0 2px 4px -1px rgba(0, 0, 0, 0.06);
-    > .item {
-      padding: 0.25rem;
-      padding-left: 0.5rem;
-      padding-right: 0.5rem;
+    gap: 0.5rem;
+    overflow-x: scroll;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    ::-webkit-scrollbar {
+      width: 0;
+      height: 0;
+    }
+
+    @media (min-width: 1024px) {
+      flex-wrap: wrap;
+      overflow-x: visible;
+    }
+
+    a {
+      display: block;
+      padding: 0.25rem 0.75rem;
       border-radius: 0.75rem;
-      font-size: 0.875rem;
-      line-height: 1.25rem;
-      white-space: nowrap;
+      font-size: 1rem;
+      line-height: 1.5rem;
+      color: ${({ theme }) => theme.colors.gray10};
+      flex-shrink: 0;
       cursor: pointer;
+      background-color: ${({ theme }) => theme.colors.gray4};
 
       :hover {
-        background-color: ${({ theme }) => theme.colors.gray4};
+        background-color: ${({ theme }) => theme.colors.gray6};
+      }
+      &[data-active="true"] {
+        color: ${({ theme }) => theme.colors.gray12};
+        background-color: ${({ theme }) => theme.colors.gray6};
       }
     }
   }

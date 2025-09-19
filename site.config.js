@@ -13,7 +13,7 @@ const CONFIG = {
   projects: [
      {
        name: `DownList`,
-       href: "https://dgithub.xyz/xxxkjing/DownList",
+       href: "https://github.com/xxxkjing/DownList",
      },
      {
        name: `Xia So`,
@@ -21,7 +21,7 @@ const CONFIG = {
      },
      {
        name: `SoftLock`,
-       href: "https://dgithub.xyz/xxxkjing/SoftLock",
+       href: "https://github.com/xxxkjing/SoftLock",
      },
    ],
   // blog setting (required)
