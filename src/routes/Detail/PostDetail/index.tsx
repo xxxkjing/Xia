@@ -1,5 +1,4 @@
-// src/routes/Detail/PostDetail/index.tsx
-import React, { useEffect, useState } from "react"  // 导入 useState/useEffect 用于生成和渲染目录
+import React, { useEffect, useState } from "react"
 import PostHeader from "./PostHeader"
 import Footer from "./PostFooter"
 import CommentBox from "./CommentBox"
@@ -13,15 +12,17 @@ type Props = {}
 type Heading = {
   id: string
   text: string
-  level: number  // 1 for h1, 2 for h2, 3 for h3
+  level: number
 }
 
 const PostDetail: React.FC<Props> = () => {
   const data = usePostQuery()
-  const [headings, setHeadings] = useState<Heading[]>([])  // 存储提取的目录项
+  const [headings, setHeadings] = useState<Heading[]>([])
+  const [isVisible, setIsVisible] = useState(false)
 
-  // 在组件挂载后，从 recordMap 中提取 h1/h2/h3 标题
   useEffect(() => {
+    setIsVisible(true)
+    
     if (data?.recordMap) {
       const newHeadings: Heading[] = []
       Object.values(data.recordMap.block).forEach((block) => {
@@ -29,11 +30,11 @@ const PostDetail: React.FC<Props> = () => {
         const titleText = value?.properties?.title?.[0]?.[0]
         
         if (titleText) {
-          if (value.type === 'header') {  // h1
+          if (value.type === 'header') {
             newHeadings.push({ id: value.id, text: titleText, level: 1 })
-          } else if (value.type === 'sub_header') {  // h2
+          } else if (value.type === 'sub_header') {
             newHeadings.push({ id: value.id, text: titleText, level: 2 })
-          } else if (value.type === 'sub_sub_header') {  // h3
+          } else if (value.type === 'sub_sub_header') {
             newHeadings.push({ id: value.id, text: titleText, level: 3 })
           }
         }
@@ -46,7 +47,6 @@ const PostDetail: React.FC<Props> = () => {
 
   const category = (data.category && data.category?.[0]) || undefined
 
-  // 处理目录项点击，滚动到对应块
   const handleTocClick = (id: string) => {
     const element = document.querySelector(`[data-block-id="${id}"]`)
     if (element) {
@@ -55,27 +55,32 @@ const PostDetail: React.FC<Props> = () => {
   }
 
   return (
-    <StyledWrapper>
+    <StyledWrapper className={isVisible ? "animate-fade-in" : ""}>
       <article>
         {category && (
-          <div css={{ marginBottom: "0.5rem" }}>
+          <div css={{ marginBottom: "0.5rem" }} className="animate-fade-in-up">
             <Category readOnly={data.status?.[0] === "PublicOnDetail"}>
               {category}
             </Category>
           </div>
         )}
-        {data.type[0] === "Post" && <PostHeader data={data} />}
-        <div>
+        {data.type[0] === "Post" && (
+          <div className="animate-fade-in-up" style={{ animationDelay: "0.1s" }}>
+            <PostHeader data={data} />
+          </div>
+        )}
+        <div className="animate-fade-in-up" style={{ animationDelay: "0.2s" }}>
           <NotionRenderer recordMap={data.recordMap} />
         </div>
-        {headings.length > 0 && (  // 如果有标题，则渲染目录（固定在右侧）
-          <TocWrapper>
+        {headings.length > 0 && (
+          <TocWrapper className="animate-fade-in-up" style={{ animationDelay: "0.3s" }}>
             <div className="toc-title">目录</div>
             <ul>
-              {headings.map((heading) => (
+              {headings.map((heading, index) => (
                 <li
                   key={heading.id}
-                  className={`level-${heading.level}`}  // 根据 level 缩进
+                  className={`level-${heading.level} animate-fade-in-up`}
+                  style={{ animationDelay: `${0.4 + index * 0.05}s` }}
                   onClick={() => handleTocClick(heading.id)}
                 >
                   {heading.text}
@@ -86,8 +91,12 @@ const PostDetail: React.FC<Props> = () => {
         )}
         {data.type[0] === "Post" && (
           <>
-            <Footer />
-            <CommentBox data={data} />
+            <div className="animate-fade-in-up" style={{ animationDelay: "0.5s" }}>
+              <Footer />
+            </div>
+            <div className="animate-fade-in-up" style={{ animationDelay: "0.6s" }}>
+              <CommentBox data={data} />
+            </div>
           </>
         )}
       </article>
@@ -109,51 +118,73 @@ const StyledWrapper = styled.div`
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
     0 2px 4px -1px rgba(0, 0, 0, 0.06);
   margin: 0 auto;
-  position: relative;  // 相对定位以容纳固定目录
+  position: relative;
+  opacity: 0;
+  
   > article {
     margin: 0 auto;
     max-width: 42rem;
   }
 `
 
-// 目录样式：固定在右侧，不随滚动滑动，遵从项目 gray 色调
 const TocWrapper = styled.aside`
-  position: fixed;  // 固定位置，不随滚动移动
-  top: 4rem;  // 避开头部的空间
-  right: 1rem;  // 最右侧布局
-  width: 200px;  // 固定宽度
+  position: fixed;
+  top: 4rem;
+  right: 1rem;
+  width: 200px;
   padding: 1rem;
-  background-color: ${({ theme }) => theme.colors.gray2};  // 项目 gray 背景
-  border-radius: 1rem;  // 项目圆角样式
-  font-size: 0.875rem;  // 项目小字体
-  max-height: calc(100vh - 6rem);  // 适应视口高度
-  overflow-y: auto;  // 如果目录过长，可滚动
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);  // 轻微阴影，匹配项目
+  background-color: ${({ theme }) => theme.colors.gray2};
+  border-radius: 1rem;
+  font-size: 0.875rem;
+  max-height: calc(100vh - 6rem);
+  overflow-y: auto;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  opacity: 0;
+  transition: transform 0.3s ease;
+  
+  &:hover {
+    transform: translateX(-5px);
+  }
+  
   .toc-title {
     font-weight: bold;
     margin-bottom: 0.5rem;
-    color: ${({ theme }) => theme.colors.gray12};  // 项目标题色
+    color: ${({ theme }) => theme.colors.gray12};
   }
+  
   ul {
     list-style: none;
     padding: 0;
     margin: 0;
   }
+  
   li {
     cursor: pointer;
     margin-bottom: 0.25rem;
-    color: ${({ theme }) => theme.colors.gray10};  // 项目文本色
+    color: ${({ theme }) => theme.colors.gray10};
+    opacity: 0;
+    transition: color 0.3s ease, transform 0.2s ease;
+    
     &:hover {
-      color: ${({ theme }) => theme.colors.gray12};  // 悬停高亮
+      color: ${({ theme }) => theme.colors.gray12};
+      transform: translateX(3px);
     }
-    &.level-2 { padding-left: 1rem; }  // h2 缩进
-    &.level-3 { padding-left: 2rem; }  // h3 缩进
+    
+    &.level-2 { 
+      padding-left: 1rem;
+    }
+    
+    &.level-3 { 
+      padding-left: 2rem;
+    }
   }
-  @media (max-width: 1024px) {  // 中屏：缩小宽度
+  
+  @media (max-width: 1024px) {
     width: 150px;
     right: 0.5rem;
   }
-  @media (max-width: 768px) {  // 移动端：移除固定，改为相对定位在上方，避免遮挡
+  
+  @media (max-width: 768px) {
     position: relative;
     top: 0;
     right: 0;
