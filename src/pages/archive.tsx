@@ -48,7 +48,6 @@ const ArchivePage: NextPageWithLayout<Props> = () => {
       <StyledWrapper>
         <h1>归档</h1>
         <section>
-          <h2>统计</h2>
           <p>所有文章：{posts.length}</p>  {/* 显示总文章数 */}
           <h3>标签</h3>
           <div className="button-list">  {/* 横向按钮列表，不换行 */}
@@ -193,15 +192,10 @@ const PostItem = styled.li`
   margin-bottom: 1rem;  // 增加事件间距
   padding-left: 1rem;  // 内容向右偏移
   list-style: none;
-  &::before {  // 事件点
-    content: '';
-    position: absolute;
-    left: -1.75rem;  // 点与线精确对齐
-    top: 0.75rem;  // 统一所有事件点的位置
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background-color: ${({ theme }) => theme.colors.gray8};
+  
+  /* 移除小圆点 */
+  &::before {
+    display: none;  // 隐藏小圆点
   }
 `
 
