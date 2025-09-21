@@ -28,7 +28,7 @@ const CONFIG = {
   blog: {
     title: "MetaIllusion 的博客",
     description: "记录一个高中生日常的博客",
-    scheme: "system", // 'light' | 'dark' | 'system'
+    scheme: "dark", // 'light' | 'dark' | 'system'
   },
 
   // CONFIG configration (required)

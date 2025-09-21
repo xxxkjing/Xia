@@ -19,9 +19,18 @@ const PostDetail: React.FC<Props> = () => {
   const data = usePostQuery()
   const [headings, setHeadings] = useState<Heading[]>([])
   const [isVisible, setIsVisible] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
 
   useEffect(() => {
     setIsVisible(true)
+    
+    // 检测是否为移动设备
+    const checkIsMobile = () => {
+      setIsMobile(window.innerWidth <= 768)
+    }
+    
+    checkIsMobile()
+    window.addEventListener('resize', checkIsMobile)
     
     if (data?.recordMap) {
       const newHeadings: Heading[] = []
@@ -40,6 +49,10 @@ const PostDetail: React.FC<Props> = () => {
         }
       })
       setHeadings(newHeadings)
+    }
+    
+    return () => {
+      window.removeEventListener('resize', checkIsMobile)
     }
   }, [data])
 
@@ -64,15 +77,37 @@ const PostDetail: React.FC<Props> = () => {
             </Category>
           </div>
         )}
+        
+        {/* 移动端目录显示在文章头部 */}
+        {isMobile && headings.length > 0 && (
+          <MobileTocWrapper className="animate-fade-in-up">
+            <div className="toc-title">📑 文章目录</div>
+            <div className="toc-content">
+              {headings.map((heading, index) => (
+                <div
+                  key={heading.id}
+                  className={`toc-item level-${heading.level}`}
+                  onClick={() => handleTocClick(heading.id)}
+                >
+                  {heading.text}
+                </div>
+              ))}
+            </div>
+          </MobileTocWrapper>
+        )}
+        
         {data.type[0] === "Post" && (
           <div className="animate-fade-in-up" style={{ animationDelay: "0.1s" }}>
             <PostHeader data={data} />
           </div>
         )}
+        
         <div className="animate-fade-in-up" style={{ animationDelay: "0.2s" }}>
           <NotionRenderer recordMap={data.recordMap} />
         </div>
-        {headings.length > 0 && (
+        
+        {/* 桌面端目录显示在右侧 */}
+        {!isMobile && headings.length > 0 && (
           <TocWrapper className="animate-fade-in-up" style={{ animationDelay: "0.3s" }}>
             <div className="toc-title">目录</div>
             <ul>
@@ -89,6 +124,7 @@ const PostDetail: React.FC<Props> = () => {
             </ul>
           </TocWrapper>
         )}
+        
         {data.type[0] === "Post" && (
           <>
             <div className="animate-fade-in-up" style={{ animationDelay: "0.5s" }}>
@@ -144,6 +180,7 @@ const StyledWrapper = styled.div`
   }
 `
 
+// 桌面端目录样式
 const TocWrapper = styled.aside`
   position: fixed;
   top: 4rem;
@@ -161,21 +198,14 @@ const TocWrapper = styled.aside`
   box-sizing: border-box;
   z-index: 100;
   
-  /* 移动端修复 */
+  /* 移动端隐藏桌面目录 */
+  @media (max-width: 768px) {
+    display: none;
+  }
+  
   @media (max-width: 1024px) {
     width: 150px;
     right: 0.5rem;
-  }
-  
-  @media (max-width: 768px) {
-    position: relative;
-    top: 0;
-    right: 0;
-    width: 100%;
-    margin: 1rem 0;
-    max-height: none;
-    position: static;
-    margin-top: 2rem;
   }
   
   &:hover {
@@ -213,6 +243,65 @@ const TocWrapper = styled.aside`
     
     &.level-3 { 
       padding-left: 2rem;
+    }
+  }
+`
+
+// 移动端目录样式
+const MobileTocWrapper = styled.div`
+  display: none;
+  margin-bottom: 1.5rem;
+  background-color: ${({ theme }) => theme.colors.gray3};
+  border-radius: 0.75rem;
+  padding: 1rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  
+  /* 只在移动端显示 */
+  @media (max-width: 768px) {
+    display: block;
+  }
+  
+  .toc-title {
+    font-weight: bold;
+    margin-bottom: 0.75rem;
+    color: ${({ theme }) => theme.colors.gray12};
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    
+    &::before {
+      content: "📑";
+      margin-right: 0.5rem;
+    }
+  }
+  
+  .toc-content {
+    max-height: 200px;
+    overflow-y: auto;
+  }
+  
+  .toc-item {
+    cursor: pointer;
+    padding: 0.5rem 0;
+    color: ${({ theme }) => theme.colors.gray11};
+    transition: color 0.2s ease, background-color 0.2s ease;
+    border-radius: 0.25rem;
+    padding-left: 0.5rem;
+    
+    &:hover {
+      color: ${({ theme }) => theme.colors.gray12};
+      background-color: ${({ theme }) => theme.colors.gray4};
+    }
+    
+    &.level-2 {
+      padding-left: 1.5rem;
+      font-size: 0.95rem;
+    }
+    
+    &.level-3 {
+      padding-left: 2.5rem;
+      font-size: 0.9rem;
+      color: ${({ theme }) => theme.colors.gray9};
     }
   }
 `
