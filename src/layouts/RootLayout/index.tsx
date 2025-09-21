@@ -48,6 +48,16 @@ const StyledMain = styled.main`
   padding: 0 1rem;
   opacity: 0;
   animation: fadeInUp 0.6s ease-out forwards;
+  
+  /* 移动端修复 */
+  @media (max-width: 768px) {
+    padding: 0 0.5rem;
+    width: 100vw;
+    box-sizing: border-box;
+    
+    /* 防止任何子元素导致溢出 */
+    overflow-x: hidden;
+  }
 `
 
 type Props = {
@@ -66,7 +76,10 @@ const RootLayout = ({ children }: Props) => {
   return (
     <ThemeProvider scheme={scheme}>
       <Scripts />
-      <Header fullWidth={false} />
+      {/* 确保Header不会导致溢出 */}
+      <div style={{ width: '100%', overflow: 'hidden' }}>
+        <Header fullWidth={false} />
+      </div>
       <StyledMain className="animate-fade-in-up">
         {children}
       </StyledMain>

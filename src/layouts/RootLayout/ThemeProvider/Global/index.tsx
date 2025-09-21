@@ -63,14 +63,21 @@ export const Global = () => {
           }
         }
 
-        body {
+        /* 修复移动端溢出问题 */
+        html, body {
+          width: 100%;
+          overflow-x: hidden;
           margin: 0;
           padding: 0;
+        }
+
+        body {
           color: ${theme.colors.gray12};
           background-color: ${theme.colors.gray2};
           font-family: ${pretendard.style.fontFamily};
           font-weight: ${pretendard.style.fontWeight};
           font-style: ${pretendard.style.fontStyle};
+          position: relative;
         }
 
         * {
@@ -194,6 +201,18 @@ export const Global = () => {
         /* 特别处理代码块 */
         .notion-code {
           font-family: "LXGW WenKai", "Cascadia Code", "Source Code Pro", Menlo, Consolas, "DejaVu Sans Mono", monospace !important;
+        }
+
+        /* 响应式修复 */
+        @media (max-width: 768px) {
+          .notion-page {
+            width: 100% !important;
+            padding: 0 10px !important;
+          }
+          
+          .notion-column {
+            min-width: 100% !important;
+          }
         }
       `}
     />

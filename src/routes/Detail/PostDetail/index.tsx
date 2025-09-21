@@ -120,10 +120,27 @@ const StyledWrapper = styled.div`
   margin: 0 auto;
   position: relative;
   opacity: 0;
+  box-sizing: border-box;
+  
+  /* 移动端修复 */
+  @media (max-width: 768px) {
+    padding: 1rem;
+    margin: 0.5rem;
+    width: calc(100vw - 1rem);
+    max-width: none;
+    border-radius: 1rem;
+  }
   
   > article {
     margin: 0 auto;
     max-width: 42rem;
+    width: 100%;
+    
+    /* 移动端修复 */
+    @media (max-width: 768px) {
+      max-width: 100%;
+      padding: 0;
+    }
   }
 `
 
@@ -141,6 +158,25 @@ const TocWrapper = styled.aside`
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   opacity: 0;
   transition: transform 0.3s ease;
+  box-sizing: border-box;
+  z-index: 100;
+  
+  /* 移动端修复 */
+  @media (max-width: 1024px) {
+    width: 150px;
+    right: 0.5rem;
+  }
+  
+  @media (max-width: 768px) {
+    position: relative;
+    top: 0;
+    right: 0;
+    width: 100%;
+    margin: 1rem 0;
+    max-height: none;
+    position: static;
+    margin-top: 2rem;
+  }
   
   &:hover {
     transform: translateX(-5px);
@@ -164,6 +200,7 @@ const TocWrapper = styled.aside`
     color: ${({ theme }) => theme.colors.gray10};
     opacity: 0;
     transition: color 0.3s ease, transform 0.2s ease;
+    word-break: break-word;
     
     &:hover {
       color: ${({ theme }) => theme.colors.gray12};
@@ -177,19 +214,5 @@ const TocWrapper = styled.aside`
     &.level-3 { 
       padding-left: 2rem;
     }
-  }
-  
-  @media (max-width: 1024px) {
-    width: 150px;
-    right: 0.5rem;
-  }
-  
-  @media (max-width: 768px) {
-    position: relative;
-    top: 0;
-    right: 0;
-    width: 100%;
-    margin: 1rem auto;
-    max-height: none;
   }
 `
