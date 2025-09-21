@@ -87,7 +87,7 @@ const PostDetail: React.FC<Props> = () => {
         {/* 移动端目录显示在文章标题下方 */}
         {isMobile && headings.length > 0 && (
           <MobileTocWrapper className="animate-fade-in-up" style={{ animationDelay: "0.2s" }}>
-            <div className="toc-title">📑 文章目录</div>
+            <div className="toc-title">文章目录</div>
             <div className="toc-content">
               {headings.map((heading, index) => (
                 <div
