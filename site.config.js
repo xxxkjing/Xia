@@ -15,6 +15,10 @@ const CONFIG = {
        name: `DownList`,
        href: "https://github.com/xxxkjing/DownList",
      },
+    {
+       name: `Le OI`,
+       href: "https://xoui.dpdns.org",
+     },
      {
        name: `Xia So`,
        href: "https://so.shfu.cn",
