@@ -17,7 +17,7 @@ const CONFIG = {
      },
     {
        name: `Le OI`,
-       href: "https://xoui.dpdns.org",
+       href: "https://xkjing-web.hf.space",
      },
      {
        name: `Xia So`,
