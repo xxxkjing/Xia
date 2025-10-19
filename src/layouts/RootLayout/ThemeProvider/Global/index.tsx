@@ -78,6 +78,14 @@ export const Global = () => {
           font-weight: ${pretendard.style.fontWeight};
           font-style: ${pretendard.style.fontStyle};
           position: relative;
+
+          /* Hide scrollbar for Chrome, Safari and Opera */
+          &::-webkit-scrollbar {
+            display: none;
+          }
+          /* Hide scrollbar for IE, Edge and Firefox */
+          -ms-overflow-style: none; /* IE and Edge */
+          scrollbar-width: none; /* Firefox */
         }
 
         * {
@@ -103,6 +111,7 @@ export const Global = () => {
         }
 
         a:hover {
+          color: inherit;
           transform: translateY(-1px);
         }
 

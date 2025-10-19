@@ -84,46 +84,11 @@ const PostDetail: React.FC<Props> = () => {
           </div>
         )}
         
-        {/* 移动端目录显示在文章标题下方 */}
-        {isMobile && headings.length > 0 && (
-          <MobileTocWrapper className="animate-fade-in-up" style={{ animationDelay: "0.2s" }}>
-            <div className="toc-title">文章目录</div>
-            <div className="toc-content">
-              {headings.map((heading, index) => (
-                <div
-                  key={heading.id}
-                  className={`toc-item level-${heading.level}`}
-                  onClick={() => handleTocClick(heading.id)}
-                >
-                  {heading.text}
-                </div>
-              ))}
-            </div>
-          </MobileTocWrapper>
-        )}
         
         <div className="animate-fade-in-up" style={{ animationDelay: "0.3s" }}>
           <NotionRenderer recordMap={data.recordMap} />
         </div>
         
-        {/* 桌面端目录显示在右侧 */}
-        {!isMobile && headings.length > 0 && (
-          <TocWrapper className="animate-fade-in-up" style={{ animationDelay: "0.4s" }}>
-            <div className="toc-title">目录</div>
-            <ul>
-              {headings.map((heading, index) => (
-                <li
-                  key={heading.id}
-                  className={`level-${heading.level} animate-fade-in-up`}
-                  style={{ animationDelay: `${0.5 + index * 0.05}s` }}
-                  onClick={() => handleTocClick(heading.id)}
-                >
-                  {heading.text}
-                </li>
-              ))}
-            </ul>
-          </TocWrapper>
-        )}
         
         {data.type[0] === "Post" && (
           <>

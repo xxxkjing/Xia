@@ -79,9 +79,10 @@ const StyledWrapper = styled.div`
     overflow-y: auto;
   }
 
-  /* **重点**：统一处理左右两栏，移除不再需要的 sticky 定位，并隐藏滚动条。 */
+  /* **重点**：统一处理所有列，移除不再需要的 sticky 定位，并隐藏滚动条。 */
   > .lt,
-  > .rt {
+  > .rt,
+  > .mid {
     scrollbar-width: none;
     -ms-overflow-style: none;
     &::-webkit-scrollbar {

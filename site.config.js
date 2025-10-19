@@ -33,6 +33,7 @@ const CONFIG = {
     title: "MetaIllusion 的博客",
     description: "记录一个高中生日常的博客",
     scheme: "dark", // 'light' | 'dark' | 'system'
+    postsPerPage: 5,
   },
 
   // CONFIG configration (required)
