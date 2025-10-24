@@ -1,4 +1,5 @@
-import { useState } from "react"
+import { ChangeEvent, useEffect, useRef, useState } from "react"
+import { useRouter } from "next/router"
 import SearchInput from "./SearchInput"
 import { FeedHeader } from "./FeedHeader"
 import Footer from "./Footer"
@@ -11,25 +12,74 @@ import ContactCard from "./ContactCard"
 import PostList from "./PostList"
 import PinnedPosts from "./PostList/PinnedPosts"
 
-// 常量未变
 const HEADER_HEIGHT = 73
 
 type Props = {}
 
 const Feed: React.FC<Props> = () => {
+  const router = useRouter()
   const [q, setQ] = useState("")
+  const midColumnRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    if (!router.isReady) return
+    const scrollElement = midColumnRef.current
+    if (!scrollElement) return
+
+    const storageKey = `feed-scroll:${router.asPath}`
+
+    let initialTop = 0
+    try {
+      const savedValue = sessionStorage.getItem(storageKey)
+      if (savedValue) {
+        const parsed = Number(savedValue)
+        if (!Number.isNaN(parsed)) {
+          initialTop = parsed
+        }
+      }
+    } catch {
+      // ignore storage errors
+    }
+
+    scrollElement.scrollTop = initialTop
+
+    const handleScroll = () => {
+      try {
+        sessionStorage.setItem(storageKey, String(scrollElement.scrollTop))
+      } catch {
+        // ignore storage errors
+      }
+    }
+
+    scrollElement.addEventListener("scroll", handleScroll, { passive: true })
+
+    return () => {
+      scrollElement.removeEventListener("scroll", handleScroll)
+      try {
+        sessionStorage.setItem(storageKey, String(scrollElement.scrollTop))
+      } catch {
+        // ignore storage errors
+      }
+    }
+  }, [router.asPath, router.isReady])
+
+  const handleSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setQ(event.target.value)
+    if (midColumnRef.current) {
+      midColumnRef.current.scrollTo({ top: 0, behavior: "smooth" })
+    }
+  }
 
   return (
     <StyledWrapper>
-      {/* 重点改动 (1/2): 移除了此处的行内 css 属性 */}
       <div className="lt">
         <TagList />
       </div>
 
-      <div className="mid">
+      <div className="mid" ref={midColumnRef}>
         <MobileProfileCard />
         <PinnedPosts q={q} />
-        <SearchInput value={q} onChange={(e) => setQ(e.target.value)} />
+        <SearchInput value={q} onChange={handleSearchChange} />
         <div className="tags">
           <TagList />
         </div>
@@ -40,7 +90,6 @@ const Feed: React.FC<Props> = () => {
         </div>
       </div>
 
-      {/* 重点改动 (2/2): 移除了此处的行内 css 属性 */}
       <div className="rt">
         <ProfileCard />
         <ServiceCard />
@@ -55,31 +104,26 @@ const Feed: React.FC<Props> = () => {
 
 export default Feed
 
-// **重点改动**: 整个 StyledWrapper 的 CSS 定义已被替换为优化后的版本
 const StyledWrapper = styled.div`
   grid-template-columns: repeat(12, minmax(0, 1fr));
   padding: 2rem 0;
   display: grid;
   gap: 1.5rem;
-  
-  /* **重点**：将 grid 容器的高度设置为视口减去头部高度，使主页面不再滚动。 */
+
   height: calc(100vh - ${HEADER_HEIGHT}px);
 
   @media (max-width: 768px) {
     display: block;
-    /* **重点**：在移动端恢复正常文档流高度，允许页面滚动。 */
     height: auto;
     padding: 0.5rem 0;
   }
 
-  /* **重点**：为所有列设置 overflow，让它们各自处理内部滚动。 */
   > .lt,
   > .rt,
   > .mid {
     overflow-y: auto;
   }
 
-  /* **重点**：统一处理所有列，移除不再需要的 sticky 定位，并隐藏滚动条。 */
   > .lt,
   > .rt,
   > .mid {
