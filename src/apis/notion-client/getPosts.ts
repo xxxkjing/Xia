@@ -16,8 +16,7 @@ export const getPosts = async () => {
     throw new Error("`NOTION_PAGE_ID` is not set in site.config.js")
   }
   const api = new NotionAPI({
-    apiBaseUrl: "https://physicalmouse.notion.site/api/v3",
-    authToken: process.env.NOTION_TOKEN_V2,
+    apiBaseUrl: "https://physicalmouse.notion.site/api/v3"
   })
   const response = await api.getPage(id)
   const collection = Object.values(response.collection)[0]?.value
